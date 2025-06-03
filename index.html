@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suara Hati</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .container:hover {
+      transform: scale(1.02);
+    }
+
+    h1 {
+      color: #e91e63;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: calc(100% - 24px); /* Adjust width for padding */
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid #e91e63;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      background-color: #fce4ec; /* Light pink background */
+    }
+
+    input:focus, textarea:focus {
+      border-color: #d81b60;
+      outline: none;
+    }
+
+    button {
+      background-color: #e91e63;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #d81b60;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+    }
+
+    .thank-you {
+      display: none;
+      margin-top: 20px;
+      color: #4caf50;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>♥ SUARA HATI ♥</h1>
+    <form id="heartForm">
+      <input type="text" id="nama" name="nama" placeholder="Nama" required>
+      <textarea id="pesan" name="pesan" rows="5" placeholder="Suara hatimu..." required></textarea>
+      <button type="submit">KIRIM</button>
+      <div class="note">
+        ⚠️ Pesan yang kamu kirim tidak akan disebarluaskan!
+      </div>
+    </form>
+    <div class="thank-you" id="thankYou">
+      Terima kasih sudah cerita, aku di sini kalau kamu butuh tempat curhat. ❤
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('heartForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nama = document.getElementById('nama').value;
+      const pesan = document.getElementById('pesan').value;
+
+      // Kirim ke server dengan fetch atau bisa pakai service seperti Formspree, EmailJS, dll
+      fetch('https://formspree.io/f/xqabkodl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nama: nama, pesan: pesan })
+      })
+      .then(() => {
+        document.getElementById('heartForm').reset();
+        document.getElementById('thankYou').style.display = 'block';
+      })
+      .catch(() => alert('Terjadi kesalahan. Coba lagi nanti.'));
+    });
+  </script>
+</body>
+</html>
